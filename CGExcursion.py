@@ -90,3 +90,24 @@ def classIICGExcursion(Params, ConvAndConst):
     aftCG = max(cgOEWFuel, cgOEWPayload, cgAll)
 
     return aftCG
+
+def CGExcursion(Params, ConvAndConst):
+    """
+    Function to perform the C.G. excursion.
+
+    Inputs:
+    -----
+    Params, class of design parameters
+    ConvAndConst, class containing unit conversions and constants
+    """
+
+    # Calculate OEW C.G. location as fraction of fuselage length
+    Params.CGExcursionParameters.cgOEW = emptyWeightCGCalculator(Params, ConvAndConst, xLEMAC=19.)
+    # Calculate the most aft C.G. location from different configurations
+    aftCG = classIICGExcursion(Params, ConvAndConst)
+    
+    # Calculate vertical tail CG location
+    cgVT = ConvAndConst.CGExcursionConstants.xLEMAC + (ConvAndConst.WingPlanformConstants.b - 2 * Params.WingPlanformParameters.yMAC - ConvAndConst.FuselagePlanformConstants.fuselageWidth) / 2 * np.tan(np.radians(Params.WingPlanformParameters.sweepLE)) + np.tan(np.radians(Params.EmpennageParameters.sweepLE)) * Params.EmpennageParameters.verticalTailSpanwiseLocMAC + Params.EmpennageParameters.verticalTailMAC * 0.42
+    Params.EmpennageParameters.Lvt = cgVT - aftCG
+
+    return
