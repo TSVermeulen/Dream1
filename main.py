@@ -24,7 +24,7 @@ from WingAerodynamics import PlanformParameterization, OutboardWingSizing, Aerod
 from Undercarriage import UnderCarriageSizing
 from MovableSurfaces import aileronSizing
 from AerodynamicPerformance import DragPolar, calculateLiftCoefficients
-from CGExcursion import emptyWeightCGCalculator, classIICGExcursion
+from CGExcursion import CGExcursion
 
 """ General Setup - Iteration Parameters"""
 Iterate = True # Iteration stop/go parameter
@@ -40,7 +40,7 @@ while Iterate:
     else:
         WTO_classII = DesignParameters.ClassIWEParameters.WOE + DesignParameters.payloadWeight + DesignParameters.ClassIWEParameters.WF
         MTOW_diff = (WTO_classII - DesignParameters.ClassIWEParameters.WTO) / DesignParameters.ClassIWEParameters.WTO * 100.0
-        if MTOW_diff < 0.5:
+        if abs(MTOW_diff) < 0.5:
             print("Iteration Completed")
             break
 
@@ -152,14 +152,9 @@ while Iterate:
 
     #---------------------------------
     #C.G. Excursion
-    #Based on ADSEE-I course
     #---------------------------------
     
-    DesignParameters.CGExcursionParameters.cgOEW = emptyWeightCGCalculator(DesignParameters, ConversionsAndConstants, xLEMAC=19.)
-    DesignParameters.CGExcursionParameters.aftCG = classIICGExcursion(DesignParameters, ConversionsAndConstants)
-    
-    xC4MAC_vtail = ConversionsAndConstants.CGExcursionConstants.xLEMAC + (ConversionsAndConstants.WingPlanformConstants.b - 2 * DesignParameters.WingPlanformParameters.yMAC - ConversionsAndConstants.FuselagePlanformConstants.fuselageWidth) / 2 * np.tan(np.radians(DesignParameters.WingPlanformParameters.sweepLE)) + np.tan(np.radians(DesignParameters.EmpennageParameters.sweepLE)) * DesignParameters.EmpennageParameters.verticalTailSpanwiseLocMAC + DesignParameters.EmpennageParameters.verticalTailMAC * 0.42
-    DesignParameters.EmpennageParameters.Lvt = xC4MAC_vtail - DesignParameters.CGExcursionParameters.aftCG
+    CGExcursion(DesignParameters, ConversionsAndConstants)
 
     #---------------------------------
     #Converged Iteration Parameters
