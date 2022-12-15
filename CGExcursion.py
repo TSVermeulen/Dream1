@@ -85,8 +85,7 @@ def classIICGExcursion(Params, ConvAndConst):
     cgOEWPayload = (WxCGOEW + WxCGPL) / (Params.payloadWeight + Params.ClassIWEParameters.WOE)
     cgAll = (WxCGPL + WxCGFuel + WxCGOEW) / (Params.payloadWeight + Params.ClassIWEParameters.WOE + Params.ClassIWEParameters.WF)
     
-    # Calculate most forward and most aft CG locations
-    fwdCG = min(cgOEWFuel, cgOEWPayload, cgAll)
+    # Calculate most aft CG location
     aftCG = max(cgOEWFuel, cgOEWPayload, cgAll)
 
     return aftCG

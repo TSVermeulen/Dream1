@@ -40,7 +40,7 @@ while Iterate:
     else:
         WTO_classII = DesignParameters.ClassIWEParameters.WOE + DesignParameters.payloadWeight + DesignParameters.ClassIWEParameters.WF
         MTOW_diff = (WTO_classII - DesignParameters.ClassIWEParameters.WTO) / DesignParameters.ClassIWEParameters.WTO * 100.0
-        if MTOW_diff < 0.5:
+        if abs(MTOW_diff) < 0.5:
             print("Iteration Completed")
             break
 
@@ -152,7 +152,6 @@ while Iterate:
 
     #---------------------------------
     #C.G. Excursion
-    #Based on ADSEE-I course
     #---------------------------------
     
     CGExcursion(DesignParameters, ConversionsAndConstants)
