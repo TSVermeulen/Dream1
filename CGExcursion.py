@@ -1,0 +1,74 @@
+"""
+
+Program to perform a CG Excursion on the blended wing body concept. 
+Based on:
+
+Loosely based on an initial implementation by Rasa.
+
+@author: Thomas Stephan Vermeulen
+
+"""
+
+import numpy as np
+
+def emptyWeightCGCalculator(Params, ConvAndConst, xLEMAC=None):
+    """
+    Function to calculate the C.G. location of the aircraft OEW.
+    
+    Inputs:
+    -----
+    Params, class of design parameters
+    ConvAndConst, class containing unit conversions and constants
+    xLEMAC, longitudinal position of the leading edge of the mean aerodynamic chord [m]
+
+    Outputs:
+    -----
+    OEWcg, C.G. location of the OEW of the aircraft, expressed as fraction of the fuselage length [-]
+    """
+
+    # Calculate C.G. location of vertical tail.
+    verticalTailCGMAC = (np.tan(np.radians(Params.WingPlanformParameters.sweepLE)) * (ConvAndConst.WingPlanformConstants.b / 2 - Params.WingPlanformParameters.yMAC) + 0.42 * Params.EmpennageParameters.verticalTailMAC + Params.EmpennageParameters.verticalTailSpanwiseLocMAC * np.tan(np.radians(Params.EmpennageParameters.sweepLE))) / Params.WingPlanformParameters.wingMAC
+    # Calculate C.G. location of engine on the wing. 
+    enginesCGMAC = (0.7 * Params.WingPlanformParameters.kinkChord - np.tan(np.radians(Params.WingPlanformParameters.sweepLE)) * (Params.WingPlanformParameters.yMAC - Params.WingPlanformParameters.kinkLocation)) / Params.WingPlanformParameters.wingMAC
+    # Calculate C.G. location of engine along nacelle length. 
+    engineCGNacelle = (0.4 * Params.PropulsionSizingParameters.ln * Params.ClassIIWEParameters.nacelleWeight + 0.6 * Params.PropulsionSizingParameters.ln * Params.ClassIIWEParameters.motorWeight) / ((Params.ClassIIWEParameters.motorWeight + Params.ClassIIWEParameters.nacelleWeight) * Params.PropulsionSizingParameters.ln)
+    engineCGFus = (0.7 * ConvAndConst.FuselagePlanformConstants.XLP + engineCGNacelle * Params.PropulsionSizingParameters.ln) / ConvAndConst.FuselagePlanformConstants.XLP
+
+    fuselageCG = ((0.4 * Params.FuselagePlanformParameters.fuselageMAC) + (ConvAndConst.FuselagePlanformConstants.XLP - Params.FuselagePlanformParameters.fuselageMAC)) / ConvAndConst.FuselagePlanformConstants.XLP
+	
+    # Wing Group C.G. with respect to the mean aerodynamic chord
+    WingGroupWeights = np.array([Params.ClassIIWEParameters.WWING - Params.ClassIIWEParameters.W4, Params.ClassIIWEParameters.WVT, Params.ClassIIWEParameters.engineWeight * Params.ClassIIWEParameters.NEW], dtype=object).flatten()
+    WingGroupLocations = np.array([ConvAndConst.CGExcursionConstants.xi_wing, verticalTailCGMAC, enginesCGMAC], dtype=object).flatten() * Params.WingPlanformParameters.wingMAC 
+    CGWingGroupMAC = np.sum(np.multiply(WingGroupWeights, WingGroupLocations)) / (np.sum(WingGroupWeights) * Params.WingPlanformParameters.wingMAC)
+
+    # Fuselage Group C.G. with respect to fuselage length
+    FuselageGroupWeights = np.array([Params.ClassIIWEParameters.WFUS + Params.ClassIIWEParameters.W4, Params.ClassIIWEParameters.engineWeight * Params.ClassIIWEParameters.FNEF, Params.ClassIIWEParameters.hydrogenTankWeight, Params.ClassIIWEParameters.fuelCellWeight, Params.ClassIIWEParameters.WSYSEQUIPMENT, Params.ClassIIWEParameters.WOPERATINGITEMS], dtype=object).flatten()
+    FuselageGroupLocations = np.array([fuselageCG, engineCGFus, ConvAndConst.CGExcursionConstants.x_cg_Fuel, ConvAndConst.CGExcursionConstants.xi_fuel_cells, ConvAndConst.CGExcursionConstants.xi_sys_eq, ConvAndConst.CGExcursionConstants.xi_operating_items], dtype=object).flatten() * ConvAndConst.FuselagePlanformConstants.XLP
+    CGFuselageGroupFus = np.sum(np.multiply(FuselageGroupWeights, FuselageGroupLocations)) / np.sum(FuselageGroupWeights)
+
+    if xLEMAC is None:
+        LEMACLocation = CGFuselageGroupFus + Params.WingPlanformParameters.wingMAC * (CGWingGroupMAC * (np.sum(WingGroupWeights) / np.sum(FuselageGroupWeights)) - ConvAndConst.CGExcursionConstants.xoew_aircraft_wrt_mac * (1 + (np.sum(WingGroupWeights) / np.sum(FuselageGroupWeights))))
+        CGOEW = LEMACLocation + Params.WingPlanformParameters.wingMAC * ConvAndConst.CGExcursionConstants.xoew_aircraft_wrt_mac
+
+    else:
+        x_cg_wing_wrt_fuselage = xLEMAC + CGWingGroupMAC * Params.WingPlanformParameters.wingMAC
+        CGOEW = ((x_cg_wing_wrt_fuselage * np.sum(WingGroupWeights)) + (CGFuselageGroupFus * np.sum(FuselageGroupWeights))) / (np.sum(FuselageGroupWeights) + np.sum(WingGroupWeights))
+
+    # Calculate OEW C.G. along fuselage length.
+    OEWcg = CGOEW / ConvAndConst.FuselagePlanformConstants.XLP
+
+    return OEWcg
+
+def classIICGExcursion(Params, ConvAndConst):
+    """
+    Function to calculate the most forward and aft C.G. locations.
+
+    Inputs:
+    -----
+    Params, class of design parameters
+    ConvAndConst, class containing unit conversions and constants
+
+    """
+
+
+    return

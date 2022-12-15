@@ -1,0 +1,141 @@
+ORIGINAL - NO TAKE-OFF POWER
+81.155 tonnes
+	Updated OEW: [625456.6222192] [N]
+	Updated MTOW: [795862.9827464] [N]
+	Fuel Weight: [15951.6230272] [N]
+
+----- BASELINE DESIGN -----
+ORIGINAL - Corrected to also include take-off power
+85.313 tonnes
+	Updated OEW: [658718.48593056] [N]
+	Updated MTOW: [836636.03677541] [N]
+	Fuel Weight: [23462.81334485] [N]
+
+NEW - update method for calculating wetted areas
+85.179 tonnes
+	Updated OEW: [657684.80850672] [N]
+	Updated MTOW: [835325.36139886] [N]
+	Fuel Weight: [23185.81539214] [N]
+
+NEW - Reduced nacelle area to account for aerodynamic mounting
+	Updated OEW: [656481.14282584] [N]
+	Updated MTOW: [833778.81962845] [N]
+	Fuel Weight: [22842.93930261] [N]
+
+NEW - corrected way of updating WOE
+	Updated OEW: [656270.89139646] [N]
+	Updated MTOW: [833580.04741263] [N]
+	Fuel Weight: [22854.41851616] [N]
+
+NEW - corrected way of updating WTO_classII
+84.342 tonnes
+	Updated OEW: [650066.39653091] [N]
+	Updated MTOW: [827117.12502366] [N]
+	Fuel Weight: [22595.99099275] [N]
+
+NEW - implemented automated undercarriage sizing
+this has no influence on convergence directly, but influences the design space for the design point selection.
+old implementation
+	CD0 Clean: [0.00595178]
+	CD0 Landing: [0.00889815]
+new cd0
+	CD0 Clean: [0.00595178]
+	CD0 Landing: [0.00659402]
+
+	Updated OEW: [650066.39653091] [N]
+	Updated MTOW: [827117.12502366] [N]
+	Fuel Weight: [22595.99099275] [N]
+
+NEW - implementing classes to cleanup code
+Issues found:
+	Bugfix: where fuel weight was double corrected for boil-off, once in function PropulsionIterationV2.py -> hydrogenneeded() by factor 1.1, and then by boiloff factor in ClassI_WE.py -> classIWeight().
+	Bugfix: thrust setting at Top of Climb should be calculated with the aircraft weight at top of climb.
+	Bugfix: iteration1 calculation of h2endcruise and h2endApp
+	Bugfix: mistake in furniture weight calculation where angle was not converted into radians.
+	Bugfix: WingAerodynamics.py -> PlanformParameterization(): sweepc4 and sweepc2 were calculated incorrectly
+	Bugfix: WingAerodynammics.py -> OutboardWingSizing(): sweepLE was calculated incorrectly
+	Bugfix: ClassII_BWB.py -> classIISystemsandEquipment(): Hydraulics weight now correctly uses number of engines on wing and fuselage instead of total number of engines.
+	Bugfix: ClassII_BWB.py -> classIISystemsandEquipment(): Instruments weight now correctly uses number of engines on wing and fuselage instead of total number of engines.
+	Bugfix: ClassII_BWB.py -> classIISystemsandEquipment(): Anti-icing weight now correctly uses average C/4 sweep instead of leading edge sweep.
+	Bugfix: AerodynamicPerformance.py -> getCD0(): streamwise t/c calculations should be multiplied by cosine instead of divided by cosine. 
+	Bugfix: AerodynamicPerformance.py -> getCD0(): Calculation of drag contribution from landing gear was missing a factor 2, since theres a wheel on either side of the strut. 
+	Bugfix: ClassII_BWB.py -> classIISystemsandEquipment(): Engine controls weight did not convert thrust per engine to imperial units. 
+	Bugfix: PropulsionIterationV2.py -> PropulsionIteration(): loiter altitude thrust check used wrong altitude.
+	Bugfix: cg_range_longitudinal.py -> x_empty_operating_weight_class_II(): wing weight in wing components array wrongly included W4, which is part of the fuselage group. 
+	Bugfix: PropulsionIterationV3.py -> engineAero(): critical pressure ratio had wrong exponent. 
+	Bugfix: PropulsionIterationV3.py -> engineAero(): Check if engine nozzle is choked was performed incorrectly. 
+	Bugfix: PropulsionIterationV3.py -> engineAero(): P01 was wrongly calculated using total pressure instead of static pressure. 
+	Bugfix: PropulsionIterationV3.py -> engineAero(): T01 was wrongly calculated. 
+Runtime improvements:	
+	Runtime: fuselage planform remains constant, so only run during iteration 1. 
+	Runtime: removed math library dependency in DesignParameters.py, replaced by numpy
+	Runtime: combined fuelWeightFractions() into classIWeight() to reduce global variable count and cleanup main.py
+	Runtime: converted payloadMass to payloadWeight, i.e. changed from kg to N, reducing the number of operations needed whenever weight is involved.
+	Runtime: ClassI_WE.py -> classIWeight(): Included calculation for maximum landing weight from FLOPS method in class I Weight estimation to remove feedback look from class II Weight estimation to landing gear sizing to drag polar. 
+	Runtime: ClassI_WE.py -> hydrogenWeightEstimation(): Moved into class I WE to improve runtime efficiency. Restructured to reduce number of calculations needed.
+	Runtime: Undercarriage.py -> UnderCarriageSizing(): Removed optimization for diameter-width ratio as there is a global optimum at 0.4 regardless of landing gear design. Replaced with simple constant.
+	Runtime: Removed effective AR calculation from main.py as it is already included in AerodynamicPerformance.py -> DragPolar().
+	Runtime: PropulsionIterationV2.py -> PropulsionIteration(): moved altitudeThrustChecker() functions here for consistency and slight runtime improvement.
+	Runtime: PropulsionIterationV2.py -> weightEstimationFan(): removed unnecessary inputs and changed outputs to Newtons for unit consistency.   	
+New functionalities:
+	New: ClassII_BWB.py -> classIIPropulsionScaling(): Implemented scaling function to scale relevant propulsion items so that the FLOPS method can appropriately scale for distributed propulsion.  	
+	New: implemented v0 of new implementation of oswald factor in WingAerodynamics.py -> AerodynamicAnalysis().
+	New: implemented automated calculation of streamwise t/c in AerodynamicPerformance.py -> getCD0().
+	New: removed blendwidth implementation from main.py.
+	New: reintroduced WSRV from the FLOPS method to account for trolley weights and other cabin equipment needed to provide service / items in flight.
+	New: update in PropulsionIterationV2.py -> weightComponents(): compressor power is now dynamically calculated for each condition instead of only for top-of-climb
+	New: AerodynamicPerformance.py -> getCD0(): Implemented speed, Mach, and nu as inputs so drag polar can be properly estimated for cruise and loiter separately.
+	New: Undercarriage.py -> UnderCarriageSizing(): Implemented optimization for diameter-width ratio of wheels to minimize frontal area of landing gear.
+	New: AerodynamicPerformance.py -> getCD0(): Included subsonic Reynolds number and transonic Reynolds number differentiation.
+	New: ClassI_WE.py -> classIWeight(): Improved statistical estimated of h2TO, h2endCruise, and h2endApp. 
+	New: PropulsionIterationV2.py -> weightComponents(): removed cableMass estimation. Reintroduced WELEC from FLOPS weight estimation method to calculate electrical systems mass into ClassII_BWB.py -> classIISystemsAndEquipment().
+	New: DesignParameters.py -> ConversionsAndConstants(): reduced boilOff factor from 0.15 to 0.115 as this yields minimum weight of hydrogen tank.
+	New: PropulsionIterationV2.py -> WeightEstimationFan(): introduced dynamic calculation of Vtip to improve accuracy of fan weight estimation.
+	New: ClassII_BWB.py -> classIIWingSimplified(): Introduced dynamic calculation of PCTL through area ratio. 
+	New: PropulsionIterationV2.py -> PropulsionIterationV3.py: Created new file. New fixes will occur in here. 
+
+NEW - check variable feed / naming in engineAero()
+
+NEW - implement new class I database based on BWB aircraft
+
+NEW - implement blending region of wing in planform parameterisation
+
+NEW - IMPLEMENT ENGINE SIZING FOR EACH FLIGHT CONDITION AND OPTIMISATION TO PICK WHICHEVER WORKING CONFIG YIELDS LOWEST NUMBER OF ENGINES
+
+NEW - IMPLEMENT APPROACH THRUST SETTING CALCULATION
+
+NEW - NEED TO CHECK THRUST SETTINGS ARE CALCULATED CORRECTLY AND USED CORRECTLY THROUGHOUT
+
+NEW - implement detailed wing weight estimation from FLOPS
+
+NEW - updating / improving sources for efficiencies of engine subsystem
+
+NEW - Implementing wing weight correction from bending relief of vertical tail positoning
+
+NEW - Implementing LE kruger flaps along the aileron span to ensure roll authority at high AoA by avoiding flow separation
+
+NEW - Propulsion subsystem design for hydrogen combustion (i.e. conceptual design of 2 hydrogen turbofans) to compare performance
+
+NEW - check / fix calculations for sweep angle transformations
+
+NEW - automate Design point selection
+
+NEW - implement calculation to determine wing & fuselage critical Mach number
+
+NEW - implement calculations from torenbeek to dynamically update cruise mach number to equal mach number for which range is optimal (learned in safran lunch lecture)
+
+NEW - test other tank geometries for flexibility of design
+
+NEW - use different thicknesses for cylindrical and spherical parts of hydrogen tank to save further weight
+
+NEW - change / confirm values for minimum thickness of tank walls
+
+NEW - change / confirm vacuum thickness of hydrogen tank
+
+NEW - use composites for hydrogen tank to save weight
+
+NEW - use constant C4 sweep along outboard wing
+
+NEW - implement correct top of climb thrust (climb rate is not constant throughout climb): 
+	https://aviation.stackexchange.com/questions/38471/what-are-the-climb-rates-during-the-different-phases-of-flight-of-an-a320
+	https://aviation.stackexchange.com/questions/87652/conflicting-a320-climb-profiles

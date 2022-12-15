@@ -1,0 +1,709 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Try the new cross-platform PowerShell https://aka.ms/pscore6
+
+PS C:\Users\Thomas Vermeulen> & "C:/Users/Thomas Vermeulen/AppData/Local/Programs/Python/Python39/python.exe" "c:/Users/Thomas Vermeulen/OneDrive/Documenten/Bsc Aerospace Engineering/Bsc3/DSE - Cutting Edge Low-Cost Low-Emission A320 Aircraft/DSE - GitHub/DesignIteration/main.py"
+----------
+Iteration Status
+Iteration Number: 0        
+----------
+Class I Weight Estimation  
+MTOW: [472045.94724203] [N]
+OEW: [264736.41342592] [N] 
+WF: [52854.7963161] [N]    
+----------
+Do you wish to override the class I weight estimation to skip to a higher iteration number? (True/False)False
+Is the design point converged? (True/False):False
+Enter wing loading [N/m2]:1800
+Enter thrust loading [-]:0.26
+Design Point
+Reference Surface Area: [262.24774847] [m2]
+Total Thrust Required: [122731.94628293] [N]
+----------
+Propulsion System
+Number of Engines: 12 [-]
+----------
+Please enter the target wingspan (i.e. 36 [m] if maximum span is 36):36
+----------
+Planform
+Cabin Area: 147.9128 [m2]
+Fuselage Area: 211.304 [m2]
+Wing Lift Slope: [0.11882663] [1/deg]
+Wing Maximum Lift Coefficient: 1.8534000000000002 [-]
+Stall Angle: [10.94875703] [deg]
+Stall Speed at Sea Level: [39.81975895] [m/s]
+Effective Aspect Ratio: [6.42445935] [-]
+Oswald Factor: [0.98401475] [-]
+Root Chord: [3.98246654] [m]
+Kink Chord: [2.54081365] [m]
+Tip Chord: [1.08238662] [m]
+Spanwise Location of Kink: 9.213000000000001 [m]
+Width of Distributed Propulsion: [15.80522977] [m2]
+Number of Engines Positioned on the Aft Fuselage: [6.50518857] [-]
+Number of Engines Positioned on the Wing: [5.49481143] [-]
+----------
+roll time [1.40158752]
+ROLL REQUIREMENT NOT MET. ITERATION STOPPED
+Please restart the iteration
+Moving Surfaces Design
+Surface Area of Moving Surfaces: 20 [m2]
+----------
+Empennage Design
+Total Surface Area Vertical Tail: [48.72732359] [m2]
+Span of Each Vertical Tail: [13.24070858] [m]
+Sweep Leading Edge Vertical Tail: [55.19154446] [deg]
+Root Chord of Each Vertical Tail: [1.08238662] [m]
+Tip Chord of Each Vertical Tail: [0.75767063] [m]
+Mean Aerodynamic Chord of Each Vertical Tail: [0.92957909] [m]
+Spanwise Location of MAC of Each Vertical Tail: [3.11546084] [m]
+----------
+miscDrag: [0.00068194]
+Aerodynamic Performance
+Cruise Lift Coefficient: [0.16491408] [-]
+CD0 in Clean Configuration: [0.0062843] [-]
+CD0 with Landing Gear Deployed: [0.00696625] [-]
+Cruise L/D: [21.54699083] [-]
+----------
+Radius Inner Tank  1.423  m
+Radius Outer Tank  1.4469401159156996  m
+Thickness Inner Tank  0.01894011591569966  m
+Thickness Outer Tank  0.003  m
+Thickness Insulation  [0.01145481]  m
+Inner Tank Mass per tank  7591.502847084065  kg
+Outer Tank Mass per tank 1135.0116358598807  kg
+Insulation Mass per tank [157.69896288]  kg
+Fan Weight: [373.83664212]
+Lining Weight: [296.5520433]
+Dutch Weight: [320.50238401]
+Fuel cell mass: [8209.06952191] [kg]
+Fuel cell volume: [7.4527014] [m3]
+Motor weight: 2400.0
+Inverter Weight: 800.0
+cables_weight: 1736.231682755747
+Cooling weight: [1074.56720042]
+SC [1029.78339115]
+WIN 978.8920612306688
+WHYD [2231.06353701]
+WAVONC 1523.6724282761502
+WFURN 10093.803126484414
+WAC [427.98725529]
+Class II Weight Estimation
+Fuselage Weight: [13974.64778609] [kg]
+Wing Weight: [10890.22612936] [kg]
+Vertical Tail Weight: [1036.00788392] [kg]
+Landing Gear Weight: [2041.92432387] [kg]
+Paint Weight: [196.37111871] [kg]
+Systems and Equipment Weight: [8275.78213349] [kg]
+Operating Items Weight: 555.65065325 [kg]
+Weight Propulsion: [15210.75947452] [kg]
+Required LH2 Including Boiloff: [6198.14266478] [kg]
+Total Hydrogen Tank Mass, excluding required LH2: [8884.21344583] [kg]
+----------
+[21.54699083] [25.856389]
+Iteration Overview
+Updated OEW: [598848.79902703] [N]
+Updated MTOW: [806158.33284313] [N]
+Fuel Weight: [52854.7963161] [N]
+Difference with previous iteration [%]: [70.77963227]
+----------
+CD0 Clean: [0.0062843]
+CD0 Landing: [0.00696625]
+Oswald Factor: [0.98401475]
+Aspect Ratio: [17.86369193]
+CLmax: 1.8534000000000002
+----------
+Iteration Status
+Iteration Number: 1
+----------
+Class I Weight Estimation
+MTOW: [779304.08230259] [N]
+OEW: [598848.79902703] [N]
+WF: [26000.54577556] [N]
+----------
+Is the design point converged? (True/False):False
+Enter wing loading [N/m2]:2800
+Enter thrust loading [-]:0.233
+Design Point
+Reference Surface Area: [278.32288654] [m2]
+Total Thrust Required: [181577.8511765] [N]
+----------
+Propulsion System
+Number of Engines: 17 [-]
+----------
+----------
+Planform
+Cabin Area: 147.9128 [m2]
+Fuselage Area: 211.304 [m2]
+Wing Lift Slope: [0.09815801] [1/deg]
+Wing Maximum Lift Coefficient: 1.8534000000000002 [-]
+Stall Angle: [12.59090067] [deg]
+Stall Speed at Sea Level: [49.66396507] [m/s]
+Effective Aspect Ratio: [6.05340086] [-]
+Oswald Factor: [0.96247565] [-]
+Root Chord: [5.23912121] [m]
+Kink Chord: [3.34255933] [m]
+Tip Chord: [1.42393028] [m]
+Spanwise Location of Kink: 9.213000000000001 [m]
+Width of Distributed Propulsion: [23.0403823] [m2]
+Number of Engines Positioned on the Aft Fuselage: [6.3217701] [-]
+Number of Engines Positioned on the Wing: [10.6782299] [-]
+----------
+roll time [1.12391971]
+Moving Surfaces Design
+Surface Area of Moving Surfaces: [29.31820095] [m2]
+----------
+Empennage Design
+Total Surface Area Vertical Tail: [51.71418795] [m2]
+Span of Each Vertical Tail: [10.68174161] [m]
+Sweep Leading Edge Vertical Tail: [55.12074973] [deg]
+Root Chord of Each Vertical Tail: [1.42393028] [m]
+Tip Chord of Each Vertical Tail: [0.99675119] [m]
+Mean Aerodynamic Chord of Each Vertical Tail: [1.22290483] [m]
+Spanwise Location of MAC of Each Vertical Tail: [2.51335097] [m]
+----------
+miscDrag: [0.00064256]
+Aerodynamic Performance
+Cruise Lift Coefficient: [0.26138144] [-]
+CD0 in Clean Configuration: [0.00671471] [-]
+CD0 with Landing Gear Deployed: [0.00735727] [-]
+Cruise L/D: [25.01902822] [-]
+----------
+Radius Inner Tank  0.989  m
+Radius Outer Tank  1.0071635802112626  m
+Thickness Inner Tank  0.013163580211262798  m
+Thickness Outer Tank  0.003  m
+Thickness Insulation  [0.01631652]  m
+Inner Tank Mass per tank  3665.6716414714706  kg
+Outer Tank Mass per tank 789.8296143941263  kg
+Insulation Mass per tank [159.93385918]  kg
+Fan Weight: [576.64953837]
+Lining Weight: [437.72241622]
+Dutch Weight: [472.75537374]
+Fuel cell mass: [12064.16746588] [kg]
+Fuel cell volume: [10.95259791] [m3]
+Motor weight: 3400.0
+Inverter Weight: 1133.3333333333335
+cables_weight: 1736.231682755747
+Cooling weight: [1579.19952128]
+SC [1520.83301861]
+WIN 1160.1683688659778
+WHYD [2515.24756808]
+WAVONC 1523.6724282761502
+WFURN 10093.803126484414
+WAC [515.07249026]
+Class II Weight Estimation
+Fuselage Weight: [15194.99487883] [kg]
+Wing Weight: [12570.70768987] [kg]
+Vertical Tail Weight: [1266.60571323] [kg]
+Landing Gear Weight: [3234.35841812] [kg]
+Paint Weight: [219.97047987] [kg]
+Systems and Equipment Weight: [8749.14895409] [kg]
+Operating Items Weight: 555.65065325 [kg]
+Weight Propulsion: [21400.05933158] [kg]
+Required LH2 Including Boiloff: [3049.01547847] [kg]
+Total Hydrogen Tank Mass, excluding required LH2: [4615.43511505] [kg]
+----------
+[25.01902822] [30.02283386]
+Iteration Overview
+Updated OEW: [664958.84218489] [N]
+Updated MTOW: [845414.12546045] [N]
+Fuel Weight: [26000.54577556] [N]
+Difference with previous iteration [%]: [8.4832153]
+----------
+CD0 Clean: [0.00671471]
+CD0 Landing: [0.00735727]
+Oswald Factor: [0.96247565]
+Aspect Ratio: [14.1874177]
+CLmax: 1.8534000000000002
+----------
+Iteration Status
+Iteration Number: 2
+----------
+Class I Weight Estimation
+MTOW: [860501.45918099] [N]
+OEW: [664958.84218489] [N]
+WF: [41087.8794961] [N]
+----------
+Is the design point converged? (True/False):False
+Enter wing loading [N/m2]:2840
+Enter thrust loading [-]:0.227
+Design Point
+Reference Surface Area: [302.99347154] [m2]
+Total Thrust Required: [195333.83123408] [N]
+----------
+Propulsion System
+Number of Engines: 19 [-]
+----------
+----------
+Planform
+Cabin Area: 147.9128 [m2]
+Fuselage Area: 211.304 [m2]
+Wing Lift Slope: [0.07538389] [1/deg]
+Wing Maximum Lift Coefficient: 1.8534000000000002 [-]
+Stall Angle: [15.44307783] [deg]
+Stall Speed at Sea Level: [50.01744971] [m/s]
+Effective Aspect Ratio: [5.56051585] [-]
+Oswald Factor: [0.9300993] [-]
+Root Chord: [7.16771466] [m]
+Kink Chord: [4.57300195] [m]
+Tip Chord: [1.94809883] [m]
+Spanwise Location of Kink: 9.213000000000001 [m]
+Width of Distributed Propulsion: [25.36490081] [m2]
+Number of Engines Positioned on the Aft Fuselage: [6.41800263] [-]
+Number of Engines Positioned on the Wing: [12.58199737] [-]
+----------
+roll time [1.11646411]
+Moving Surfaces Design
+Surface Area of Moving Surfaces: [40.11063881] [m2]
+----------
+Empennage Design
+Total Surface Area Vertical Tail: [56.29814181] [m2]
+Span of Each Vertical Tail: [8.49971097] [m]
+Sweep Leading Edge Vertical Tail: [55.12429758] [deg]
+Root Chord of Each Vertical Tail: [1.94809883] [m]
+Tip Chord of Each Vertical Tail: [1.36366918] [m]
+Mean Aerodynamic Chord of Each Vertical Tail: [1.67307311] [m]
+Spanwise Location of MAC of Each Vertical Tail: [1.99993199] [m]
+----------
+miscDrag: [0.00059024]
+Aerodynamic Performance
+Cruise Lift Coefficient: [0.26475008] [-]
+CD0 in Clean Configuration: [0.00665849] [-]
+CD0 with Landing Gear Deployed: [0.00724873] [-]
+Cruise L/D: [24.12858243] [-]
+----------
+Radius Inner Tank  1.25  m
+Radius Outer Tank  1.2716374876279863  m
+Thickness Inner Tank  0.01663748762798635  m
+Thickness Outer Tank  0.003  m
+Thickness Insulation  [0.01298199]  m
+Inner Tank Mass per tank  5857.002587651791  kg
+Outer Tank Mass per tank 997.3565757102  kg
+Insulation Mass per tank [158.42035825]  kg
+Fan Weight: [616.19205956]
+Lining Weight: [478.64140111]
+Dutch Weight: [517.13014594]
+Fuel cell mass: [12965.34573025] [kg]
+Fuel cell volume: [11.77074332] [m3]
+Motor weight: 3800.0
+Inverter Weight: 1266.6666666666667
+cables_weight: 1736.231682755747
+Cooling weight: [1697.16375609]
+SC [1894.65081475]
+WIN 1232.6788919201013
+WHYD [2676.00412571]
+WAVONC 1523.6724282761502
+WFURN 10093.803126484414
+WAC [542.80598876]
+Class II Weight Estimation
+Fuselage Weight: [15448.59600921] [kg]
+Wing Weight: [13198.00046855] [kg]
+Vertical Tail Weight: [1402.51184916] [kg]
+Landing Gear Weight: [3543.07813643] [kg]
+Paint Weight: [239.69912488] [kg]
+Systems and Equipment Weight: [9037.09772548] [kg]
+Operating Items Weight: 555.65065325 [kg]
+Weight Propulsion: [23077.37144237] [kg]
+Required LH2 Including Boiloff: [4818.26734109] [kg]
+Total Hydrogen Tank Mass, excluding required LH2: [7012.77952161] [kg]
+----------
+[24.12858243] [28.95429891]
+Iteration Overview
+Updated OEW: [720933.76564295] [N]
+Updated MTOW: [916476.38263905] [N]
+Fuel Weight: [41087.8794961] [N]
+Difference with previous iteration [%]: [6.50491906]
+----------
+CD0 Clean: [0.00665849]
+CD0 Landing: [0.00724873]
+Oswald Factor: [0.9300993]
+Aspect Ratio: [11.1247495]
+CLmax: 1.8534000000000002
+----------
+Iteration Status
+Iteration Number: 3
+----------
+Class I Weight Estimation
+MTOW: [916336.0645676] [N]
+OEW: [720933.76564295] [N]
+WF: [40947.56142466] [N]
+----------
+Is the design point converged? (True/False):False
+Enter wing loading [N/m2]:2840
+Enter thrust loading [-]:0.223
+Design Point
+Reference Surface Area: [322.65354386] [m2]
+Total Thrust Required: [204342.94239858] [N]
+----------
+Propulsion System
+Number of Engines: 19 [-]
+----------
+----------
+Planform
+Cabin Area: 147.9128 [m2]
+Fuselage Area: 211.304 [m2]
+Wing Lift Slope: [0.07126921] [1/deg]
+Wing Maximum Lift Coefficient: 1.8534000000000002 [-]
+Stall Angle: [16.15281063] [deg]
+Stall Speed at Sea Level: [50.01744971] [m/s]
+Effective Aspect Ratio: [5.22169997] [-]
+Oswald Factor: [0.93138279] [-]
+Root Chord: [8.70461727] [m]
+Kink Chord: [5.55354582] [m]
+Tip Chord: [2.36581052] [m]
+Spanwise Location of Kink: 9.213000000000001 [m]
+Width of Distributed Propulsion: [25.93051769] [m2]
+Number of Engines Positioned on the Aft Fuselage: [6.2780081] [-]
+Number of Engines Positioned on the Wing: [12.7219919] [-]
+----------
+roll time [1.11654881]
+Moving Surfaces Design
+Surface Area of Moving Surfaces: [48.71116891] [m2]
+----------
+Empennage Design
+Total Surface Area Vertical Tail: [59.95111009] [m2]
+Span of Each Vertical Tail: [7.45312412] [m]
+Sweep Leading Edge Vertical Tail: [55.20242922] [deg]
+Root Chord of Each Vertical Tail: [2.36581052] [m]
+Tip Chord of Each Vertical Tail: [1.65606736] [m]
+Mean Aerodynamic Chord of Each Vertical Tail: [2.03181374] [m]
+Spanwise Location of MAC of Each Vertical Tail: [1.75367626] [m]
+----------
+miscDrag: [0.00055427]
+Aerodynamic Performance
+Cruise Lift Coefficient: [0.26487881] [-]
+CD0 in Clean Configuration: [0.00656243] [-]
+CD0 with Landing Gear Deployed: [0.0071167] [-]
+Cruise L/D: [23.74646407] [-]
+----------
+Radius Inner Tank  1.248  m
+Radius Outer Tank  1.2696108676477815  m
+Thickness Inner Tank  0.01661086764778157  m
+Thickness Outer Tank  0.003  m
+Thickness Insulation  [0.01300619]  m
+Inner Tank Mass per tank  5838.26544860415  kg
+Outer Tank Mass per tank 995.76564864459  kg
+Insulation Mass per tank [158.47904464]  kg
+Fan Weight: [657.90855466]
+Lining Weight: [494.2232782]
+Dutch Weight: [533.69480136]
+Fuel cell mass: [13555.54832786] [kg]
+Fuel cell volume: [12.30656577] [m3]
+Motor weight: 3800.0
+Inverter Weight: 1266.6666666666667
+cables_weight: 1736.231682755747
+Cooling weight: [1774.42127612]
+SC [2172.13882584]
+WIN 1232.6788919201013
+WHYD [2724.46616702]
+WAVONC 1523.6724282761502
+WFURN 10093.803126484414
+WAC [549.85764279]
+Class II Weight Estimation
+Fuselage Weight: [15611.64421878] [kg]
+Wing Weight: [13648.63207108] [kg]
+Vertical Tail Weight: [1507.66614528] [kg]
+Landing Gear Weight: [3754.14286818] [kg]
+Paint Weight: [253.74598631] [kg]
+Systems and Equipment Weight: [9188.14475871] [kg]
+Operating Items Weight: 555.65065325 [kg]
+Weight Propulsion: [23818.69458763] [kg]
+Required LH2 Including Boiloff: [4801.81261066] [kg]
+Total Hydrogen Tank Mass, excluding required LH2: [6992.51014189] [kg]
+----------
+[23.74646407] [28.49575688]
+Iteration Overview
+Updated OEW: [738743.09805379] [N]
+Updated MTOW: [934145.39697844] [N]
+Fuel Weight: [40947.56142466] [N]
+Difference with previous iteration [%]: [1.94353721]
+----------
+CD0 Clean: [0.00656243]
+CD0 Landing: [0.0071167]
+Oswald Factor: [0.93138279]
+Aspect Ratio: [9.63800147]
+CLmax: 1.8534000000000002
+----------
+Iteration Status
+Iteration Number: 4
+----------
+Class I Weight Estimation
+MTOW: [937414.29387439] [N]
+OEW: [738743.09805379] [N]
+WF: [44216.4583206] [N]
+----------
+Is the design point converged? (True/False):True
+Enter wing loading [N/m2]:2840
+Enter thrust loading [-]:0.223
+Design Point
+Reference Surface Area: [330.07545559] [m2]
+Total Thrust Required: [209043.38753399] [N]
+----------
+Propulsion System
+Number of Engines: 19 [-]
+----------
+----------
+Planform
+Cabin Area: 147.9128 [m2]
+Fuselage Area: 211.304 [m2]
+Wing Lift Slope: [0.07269245] [1/deg]
+Wing Maximum Lift Coefficient: 1.8534000000000002 [-]
+Stall Angle: [15.89822946] [deg]
+Stall Speed at Sea Level: [50.01744971] [m/s]
+Effective Aspect Ratio: [5.10428743] [-]
+Oswald Factor: [0.9393628] [-]
+Root Chord: [9.28481634] [m]
+Kink Chord: [5.92371282] [m]
+Tip Chord: [2.52350166] [m]
+Spanwise Location of Kink: 9.213000000000001 [m]
+Width of Distributed Propulsion: [26.20072688] [m2]
+Number of Engines Positioned on the Aft Fuselage: [6.21326274] [-]
+Number of Engines Positioned on the Wing: [12.78673726] [-]
+----------
+roll time [1.11648751]
+Moving Surfaces Design
+Surface Area of Moving Surfaces: [51.95797158] [m2]
+----------
+Empennage Design
+Total Surface Area Vertical Tail: [61.33014917] [m2]
+Span of Each Vertical Tail: [7.14811464] [m]
+Sweep Leading Edge Vertical Tail: [55.24588135] [deg]
+Root Chord of Each Vertical Tail: [2.52350166] [m]
+Tip Chord of Each Vertical Tail: [1.76645116] [m]
+Mean Aerodynamic Chord of Each Vertical Tail: [2.1672426] [m]
+Spanwise Location of MAC of Each Vertical Tail: [1.68190933] [m]
+----------
+miscDrag: [0.00054181]
+Aerodynamic Performance
+Cruise Lift Coefficient: [0.26480671] [-]
+CD0 in Clean Configuration: [0.00653417] [-]
+CD0 with Landing Gear Deployed: [0.00707598] [-]
+Cruise L/D: [23.6658834] [-]
+----------
+Radius Inner Tank  1.298  m
+Radius Outer Tank  1.320276367152901  m
+Thickness Inner Tank  0.017276367152901026  m
+Thickness Outer Tank  0.003  m
+Thickness Insulation  [0.01251599]  m
+Inner Tank Mass per tank  6315.709356730611  kg
+Outer Tank Mass per tank 1035.5419858306454  kg
+Insulation Mass per tank [158.19324663]  kg
+Fan Weight: [678.4230843]
+Lining Weight: [501.85882638]
+Dutch Weight: [541.81644669]
+Fuel cell mass: [13863.48269322] [kg]
+Fuel cell volume: [12.58612764] [m3]
+Motor weight: 3800.0
+Inverter Weight: 1266.6666666666667
+cables_weight: 1736.231682755747
+Cooling weight: [1814.72988454]
+SC [2274.37636633]
+WIN 1232.6788919201013
+WHYD [2742.76116547]
+WAVONC 1523.6724282761502
+WFURN 10093.803126484414
+WAC [553.22639257]
+Class II Weight Estimation
+Fuselage Weight: [15671.04903818] [kg]
+Wing Weight: [13816.12018204] [kg]
+Vertical Tail Weight: [1547.61700652] [kg]
+Landing Gear Weight: [3833.58060188] [kg]
+Paint Weight: [259.20995069] [kg]
+Systems and Equipment Weight: [9244.34543791] [kg]
+Operating Items Weight: 555.65065325 [kg]
+Weight Propulsion: [24203.20928455] [kg]
+Required LH2 Including Boiloff: [5185.14753445] [kg]
+Total Hydrogen Tank Mass, excluding required LH2: [7509.44458919] [kg]
+----------
+[23.6658834] [28.39906008]
+Iteration Overview
+Updated OEW: [751583.87960107] [N]
+Updated MTOW: [950255.07542167] [N]
+Fuel Weight: [44216.4583206] [N]
+Difference with previous iteration [%]: [1.36980859]
+----------
+CD0 Clean: [0.00653417]
+CD0 Landing: [0.00707598]
+Oswald Factor: [0.9393628]
+Aspect Ratio: [9.19684503]
+CLmax: 1.8534000000000002
+----------
+Iteration Status
+Iteration Number: 5
+----------
+Class I Weight Estimation
+MTOW: [951682.11676807] [N]
+OEW: [751583.87960107] [N]
+WF: [45643.499667] [N]
+----------
+Design Point
+Reference Surface Area: [335.09933689] [m2]
+Total Thrust Required: [212225.11203928] [N]
+----------
+Propulsion System
+Number of Engines: 19 [-]
+----------
+----------
+Planform
+Cabin Area: 147.9128 [m2]
+Fuselage Area: 211.304 [m2]
+Wing Lift Slope: [0.07431117] [1/deg]
+Wing Maximum Lift Coefficient: 1.8534000000000002 [-]
+Stall Angle: [15.62053363] [deg]
+Stall Speed at Sea Level: [50.01744971] [m/s]
+Effective Aspect Ratio: [5.02776286] [-]
+Oswald Factor: [0.94616602] [-]
+Root Chord: [9.67755224] [m]
+Kink Chord: [6.17427833] [m]
+Tip Chord: [2.63024257] [m]
+Spanwise Location of Kink: 9.213000000000001 [m]
+Width of Distributed Propulsion: [26.38202181] [m2]
+Number of Engines Positioned on the Aft Fuselage: [6.17056574] [-]
+Number of Engines Positioned on the Wing: [12.82943426] [-]
+----------
+roll time [1.11644186]
+Moving Surfaces Design
+Surface Area of Moving Surfaces: [54.1557276] [m2]
+----------
+Empennage Design
+Total Surface Area Vertical Tail: [62.26361873] [m2]
+Span of Each Vertical Tail: [6.96241071] [m]
+Sweep Leading Edge Vertical Tail: [55.27909475] [deg]
+Root Chord of Each Vertical Tail: [2.63024257] [m]
+Tip Chord of Each Vertical Tail: [1.8411698] [m]
+Mean Aerodynamic Chord of Each Vertical Tail: [2.25891421] [m]
+Spanwise Location of MAC of Each Vertical Tail: [1.63821429] [m]
+----------
+miscDrag: [0.00053369]
+Aerodynamic Performance
+Cruise Lift Coefficient: [0.26478648] [-]
+CD0 in Clean Configuration: [0.0065156] [-]
+CD0 with Landing Gear Deployed: [0.00704928] [-]
+Cruise L/D: [23.62695749] [-]
+----------
+Radius Inner Tank  1.32  m
+Radius Outer Tank  1.3425691869351535  m
+Thickness Inner Tank  0.017569186935153587  m
+Thickness Outer Tank  0.003  m
+Thickness Insulation  [0.01232574]  m
+Inner Tank Mass per tank  6531.735207537922  kg
+Outer Tank Mass per tank 1053.0456601531064  kg
+Insulation Mass per tank [158.24638967]  kg
+Fan Weight: [692.40149018]
+Lining Weight: [507.05062558]
+Dutch Weight: [547.34026155]
+Fuel cell mass: [14071.9230192] [kg]
+Fuel cell volume: [12.77536267] [m3]
+Motor weight: 3800.0
+Inverter Weight: 1266.6666666666667
+cables_weight: 1736.231682755747
+Cooling weight: [1842.01472321]
+SC [2342.91733637]
+WIN 1232.6788919201013
+WHYD [2755.14502344]
+WAVONC 1523.6724282761502
+WFURN 10093.803126484414
+WAC [555.48663119]
+Class II Weight Estimation
+Fuselage Weight: [15710.63163518] [kg]
+Wing Weight: [13930.50711976] [kg]
+Vertical Tail Weight: [1574.7364535] [kg]
+Landing Gear Weight: [3887.27952013] [kg]
+Paint Weight: [262.91088645] [kg]
+Systems and Equipment Weight: [9282.07754942] [kg]
+Operating Items Weight: 555.65065325 [kg]
+Weight Propulsion: [24463.62846915] [kg]
+Required LH2 Including Boiloff: [5352.49291216] [kg]
+Total Hydrogen Tank Mass, excluding required LH2: [7743.02725736] [kg]
+----------
+[23.62695749] [28.35234899]
+!!!
+ITERATION COMPLETED
+!!!
+Class I Weight Estimation
+MTOW: [951682.11676807] [N]
+OEW: [759137.18502267] [N]
+WF: [45643.499667] [N]
+----------
+Design Point
+Reference Surface Area: [335.09933689] [m2]
+Total Thrust Required: [212225.11203928] [N]
+----------
+Propulsion System
+Number of Engines: 19 [-]
+Fan Diameter: [1.24484287] [m]
+Inlet Diameter: [1.24484287] [m]
+Exhaust Diameter: [1.01527401] [m]
+Nacelle Length: [2.12281979] [m]
+Maximum Diameter (@ 0.35ln): [1.33852746] [m]
+----------
+Planform
+Cabin Area: 147.9128 [m2]
+Fuselage Area: 211.304 [m2]
+Fuselage Root Chord: 27.6 [m]
+Fuselage Tip Chord: 21.724 [m]
+Wing Lift Slope: [0.07431117] [1/deg]
+Wing Maximum Lift Coefficient: 1.8534000000000002 [-]
+Stall Angle: [15.62053363] [deg]
+Stall Speed at Sea Level: [50.01744971] [m/s]
+Geometric Aspect Ratio: [8.92566778] [-]
+Effective Aspect Ratio: [5.02776286] [-]
+Oswald Factor: [0.94616602] [-]
+Root Chord: [9.67755224] [m]
+Kink Chord: [6.17427833] [m]
+Tip Chord: [2.63024257] [m]
+Spanwise Location of Kink: 9.213000000000001 [m]
+Width of Distributed Propulsion: [26.38202181] [m2]
+Number of Engines Positioned on the Aft Fuselage: [6.17056574] [-]
+Number of Engines Positioned on the Wing: [12.82943426] [-]
+----------
+Moving Surfaces Design
+Surface Area of Moving Surfaces: [54.1557276] [m2]
+----------
+Empennage Design
+Total Surface Area Vertical Tail: [62.26361873] [m2]
+Span of Each Vertical Tail: [6.96241071] [m]
+Sweep Leading Edge Vertical Tail: [55.27909475] [deg]
+Root Chord of Each Vertical Tail: [2.63024257] [m]
+Tip Chord of Each Vertical Tail: [1.8411698] [m]
+Mean Aerodynamic Chord of Each Vertical Tail: [2.25891421] [m]
+Spanwise Location of MAC of Each Vertical Tail: [1.63821429] [m]
+----------
+Aerodynamic Performance
+Cruise Lift Coefficient: [0.26478648] [-]
+CD0 in Clean Configuration: [0.0065156] [-]
+CD0 with Landing Gear Deployed: [0.00704928] [-]
+Cruise L/D: [23.62695749] [-]
+----------
+Class II Weight Estimation
+Fuselage Weight: [15710.63163518] [kg]
+Wing Weight: [13930.50711976] [kg]
+Vertical Tail Weight: [1574.7364535] [kg]
+Landing Gear Weight: [3887.27952013] [kg]
+Paint Weight: [262.91088645] [kg]
+Systems and Equipment Weight: [9282.07754942] [kg]
+Operating Items Weight: 555.65065325 [kg]
+Weight Propulsion: [24463.62846915] [kg]
+Required LH2 Including Boiloff: [5352.49291216] [kg]
+Total Hydrogen Tank Mass, excluding required LH2: [7743.02725736] [kg]
+----------
+Iteration Overview
+Updated OEW: [759137.18502267] [N]
+Updated MTOW: [959235.42218968] [N]
+Fuel Weight: [45643.499667] [N]
+Difference with previous iteration [%]: [0.79367945]
+----------
+CD0 Clean: [0.0065156]
+CD0 Landing: [0.00704928]
+Oswald Factor: [0.94616602]
+Aspect Ratio: [8.92566778]
+CLmax: 1.8534000000000002
+
+
+---------------------
+Updated OEW: [779471.36663207] [N]
+Updated MTOW: [981288.96140553] [N]
+Fuel Weight: [47362.85727347] [N]
+
+Sref = 335.09933689
