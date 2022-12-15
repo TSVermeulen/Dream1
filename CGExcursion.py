@@ -68,7 +68,25 @@ def classIICGExcursion(Params, ConvAndConst):
     Params, class of design parameters
     ConvAndConst, class containing unit conversions and constants
 
+    Outputs:
+    -----
+    aftCG, the most aft cg location, measured from the nose of the aircraft [m]
     """
 
+    # CG location of fuel multiplied by fuel weight
+    WxCGFuel = Params.ClassIWEParameters.WF * ConvAndConst.CGExcursionConstants.x_cg_Fuel * ConvAndConst.FuselagePlanformConstants.XLP
+    # CG location of OEW multiplied by OEW weight
+    WxCGOEW = Params.ClassIWEParameters.WOE * Params.CGExcursionParameters.cgOEW * ConvAndConst.FuselagePlanformConstants.XLP
+    # CG location of payload multiplied by payload weight
+    WxCGPL = Params.payloadWeight * ConvAndConst.CGExcursionConstants.x_cg_payload * ConvAndConst.FuselagePlanformConstants.XLP
 
-    return
+    # Calculate CG locations of different configurations
+    cgOEWFuel = (WxCGFuel + WxCGOEW) / (Params.ClassIWEParameters.WF + Params.ClassIWEParameters.WOE)
+    cgOEWPayload = (WxCGOEW + WxCGPL) / (Params.payloadWeight + Params.ClassIWEParameters.WOE)
+    cgAll = (WxCGPL + WxCGFuel + WxCGOEW) / (Params.payloadWeight + Params.ClassIWEParameters.WOE + Params.ClassIWEParameters.WF)
+    
+    # Calculate most forward and most aft CG locations
+    fwdCG = min(cgOEWFuel, cgOEWPayload, cgAll)
+    aftCG = max(cgOEWFuel, cgOEWPayload, cgAll)
+
+    return aftCG

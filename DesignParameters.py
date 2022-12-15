@@ -244,7 +244,9 @@ class DesignParameters:
         endOfLoiterWingLoading = 0. # [N/m2]
 
     class CGExcursionParameters:
-        """ Class to store the C.G. excursion related parameters """                                                                  
+        """ Class to store the C.G. excursion related parameters """ 
+        cgOEW = 0.25 # [-]
+        aftCG = 0. # [-]                                                                 
        
     
 class ConversionsAndConstants:

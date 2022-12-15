@@ -21,11 +21,10 @@ from PropulsionIterationV3 import PropulsionIteration, weightComponents
 from Empennage import verticalTailDesign
 from TankDesign import HydrogenTankWeightEstimation
 from WingAerodynamics import PlanformParameterization, OutboardWingSizing, AerodynamicAnalysis
-from cg_range_longitudinal import cg_excursion_classII
 from Undercarriage import UnderCarriageSizing
 from MovableSurfaces import aileronSizing
 from AerodynamicPerformance import DragPolar, calculateLiftCoefficients
-from CGExcursion import emptyWeightCGCalculator
+from CGExcursion import emptyWeightCGCalculator, classIICGExcursion
 
 """ General Setup - Iteration Parameters"""
 Iterate = True # Iteration stop/go parameter
@@ -156,12 +155,11 @@ while Iterate:
     #Based on ADSEE-I course
     #---------------------------------
     
-    cgOEW = emptyWeightCGCalculator(DesignParameters, ConversionsAndConstants, xLEMAC=19.)
-
-    forward_cg, x_cg_all, aft_cg, oe_cg = cg_excursion_classII(DesignParameters.ClassIWEParameters.WF, ConversionsAndConstants.CGExcursionConstants.x_cg_Fuel, DesignParameters.ClassIWEParameters.WOE, cgOEW, DesignParameters.payloadWeight, ConversionsAndConstants.CGExcursionConstants.x_cg_payload, ConversionsAndConstants.FuselagePlanformConstants.XLP)
-  
+    DesignParameters.CGExcursionParameters.cgOEW = emptyWeightCGCalculator(DesignParameters, ConversionsAndConstants, xLEMAC=19.)
+    DesignParameters.CGExcursionParameters.aftCG = classIICGExcursion(DesignParameters, ConversionsAndConstants)
+    
     xC4MAC_vtail = ConversionsAndConstants.CGExcursionConstants.xLEMAC + (ConversionsAndConstants.WingPlanformConstants.b - 2 * DesignParameters.WingPlanformParameters.yMAC - ConversionsAndConstants.FuselagePlanformConstants.fuselageWidth) / 2 * np.tan(np.radians(DesignParameters.WingPlanformParameters.sweepLE)) + np.tan(np.radians(DesignParameters.EmpennageParameters.sweepLE)) * DesignParameters.EmpennageParameters.verticalTailSpanwiseLocMAC + DesignParameters.EmpennageParameters.verticalTailMAC * 0.42
-    DesignParameters.EmpennageParameters.Lvt = xC4MAC_vtail - aft_cg
+    DesignParameters.EmpennageParameters.Lvt = xC4MAC_vtail - DesignParameters.CGExcursionParameters.aftCG
 
     #---------------------------------
     #Converged Iteration Parameters
