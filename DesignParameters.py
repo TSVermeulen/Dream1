@@ -32,6 +32,8 @@ class DesignParameters:
     atmos = Atmosphere(cruiseAltitude)
     cruiseSpeed = atmos.speed_of_sound * cruiseMach         # [m/s]
     cruiseDensity = atmos.density      # [kg/m3]
+    cruiseTemperature = atmos.temperature
+    cruisePressure = atmos.pressure
     cruiseSpeedOfSound = atmos.speed_of_sound
     cruiseNu = atmos.kinematic_viscosity
     

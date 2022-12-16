@@ -17,6 +17,8 @@ by Douglas P. Wells and Bryce L. Horvath
 """
 
 import numpy as np
+from TankDesign import HydrogenTankWeightEstimation
+from ambiance import Atmosphere
 
 def classIIPropulsionScaling(Params):
     """
@@ -347,3 +349,186 @@ def classIIVerticalTail(Params, ConvAndConst):
 
     return verticalTailWeight
 
+def weightEstimationFan(Params, ConvAndConst):
+    """ 
+    Function to estimate the weight of the engines
+    Based On: https://ntrs.nasa.gov/api/citations/19720005136/downloads/19720005136.pdf
+
+    Inputs:
+    -----
+    Params, class of design parameters [-]
+    ConvAndConst, class of conversion factors, physical & general constants [-]
+
+    Outputs:
+    -----
+    Wtotal, the total weight of all the engines [N]
+    Wnacelle, the weight of a nacelle [N]
+    """
+
+    # Mass of the fan
+    fanMass = 85.38 * (Params.PropulsionSizingParameters.Dfan ** 2.7) * ((Params.PropulsionSizingParameters.Vtip / 350) ** 0.3)
+    fanMass = fanMass * ConvAndConst.EngineConstants.compositeFan
+
+    # Duct Lining Mass
+    # Hub length is assumed to be 80% of nacelle
+    linningMass = np.pi * ((Params.PropulsionSizingParameters.ln * Params.PropulsionSizingParameters.Di) + (Params.PropulsionSizingParameters.ln * 0.65 * Params.PropulsionSizingParameters.Dh)) * ConvAndConst.EngineConstants.WAw
+
+    # Duct casing Mass
+    ductMass = np.pi * ((Params.PropulsionSizingParameters.Di + Params.PropulsionSizingParameters.De + Params.PropulsionSizingParameters.Dn) / 3) * Params.PropulsionSizingParameters.ln * ConvAndConst.EngineConstants.rhoDuct * ConvAndConst.EngineConstants.tDuct
+
+    # Grouping Masses
+    totalPerFanMass = fanMass + linningMass + ductMass
+    nacelleWeight = (ductMass + linningMass) * ConvAndConst.g
+    totalWeight = totalPerFanMass * Params.PropulsionSizingParameters.num_engines * ConvAndConst.g
+
+    return totalWeight, nacelleWeight
+
+def Fuelcells(Pmax, ConvAndConst):
+    """
+    Function to estimate the fuell cell mass.
+    Based on the use of the PowerCellution P Stack fuel cells:
+    https://www.datocms-assets.com/36080/1636022110-p-stack-v-221.pdf
+
+    Inputs:
+    -----
+    Pmax, maximum power required from the fuel cells to drive the fans [W]
+    ConvAndConst, class of conversion factors, physical & general constants [-]
+
+    Outputs:
+    -----
+    fuelCellWeight, the total mass of the fuel cells [N]
+    """
+
+    fuelCellWeight = Pmax / ConvAndConst.EngineConstants.fuelCellEnergyDensity * ConvAndConst.g
+
+    return fuelCellWeight
+
+def classIIPropulsionSystem(Params, ConvAndConst):
+    """
+    Grouping functions to calculate the weights of the different components of the propulsion subsystem
+
+    Inputs:
+    -----
+    Params, class of design parameters [-]
+    ConvAndConst, class of conversion factors, physical & general constants [-]
+
+    Outputs:
+    -----
+    totalWeight, total weight of the propulsion subsystem [N]
+    fuelCellWeight, total weight of fuel cells [N]
+    WperEngine, mass per engine [N]
+    motorWeight, weight of one motor [N]
+    nacelleWeight, mass of one nacelle [N]
+    """
+    
+    # Atmospheric properties
+    atmos = Atmosphere(ConvAndConst.EngineConstants.climbAppAlt)
+    T_cl = atmos.temperature
+    p_cl = atmos.pressure
+    atmos = Atmosphere(Params.loiterAltitude)
+    T_loi = atmos.temperature
+    p_loi = atmos.pressure
+    
+    # Calculate Ducted Fan Weight
+    totalFanWeight, nacelleWeight = weightEstimationFan(Params, ConvAndConst)
+
+    # Calculate the weight of the motor 
+    motorWeight = ConvAndConst.EngineConstants.motorPower / ConvAndConst.EngineConstants.specificEnergyMotor * ConvAndConst.g
+
+    # Calculate the weight of the electrical inverter
+    inverterWeight = ConvAndConst.EngineConstants.motorPower / ConvAndConst.EngineConstants.specificEnergyInverter * ConvAndConst.g
+
+    # Calculate total power required in each phase accounting for efficiencies and additional power needed to power other systems
+    Ptot_CL_we = (Params.ClassIWEParameters.climbPower / (ConvAndConst.EngineConstants.motorEfficiency * ConvAndConst.EngineConstants.inverterEfficiency) +  ConvAndConst.EngineConstants.additionalPower) / ConvAndConst.EngineConstants.cableEfficiency
+    Ptot_TO_we = (Params.ClassIWEParameters.takeOffPower / (ConvAndConst.EngineConstants.motorEfficiency * ConvAndConst.EngineConstants.inverterEfficiency) +  ConvAndConst.EngineConstants.additionalPower) / ConvAndConst.EngineConstants.cableEfficiency
+    Ptot_CR_we = (Params.ClassIWEParameters.cruisePower / (ConvAndConst.EngineConstants.motorEfficiency * ConvAndConst.EngineConstants.inverterEfficiency) +  ConvAndConst.EngineConstants.additionalPower) / ConvAndConst.EngineConstants.cableEfficiency
+    Ptot_APP_we = (Params.ClassIWEParameters.approachPower / (ConvAndConst.EngineConstants.motorEfficiency * ConvAndConst.EngineConstants.inverterEfficiency) +  ConvAndConst.EngineConstants.additionalPower) / ConvAndConst.EngineConstants.cableEfficiency
+    Ptot_LOI_we = (Params.ClassIWEParameters.loiterPower / (ConvAndConst.EngineConstants.motorEfficiency * ConvAndConst.EngineConstants.inverterEfficiency) +  ConvAndConst.EngineConstants.additionalPower) / ConvAndConst.EngineConstants.cableEfficiency
+    Ptot_TC_we = (Params.ClassIWEParameters.topOfClimbPower / (ConvAndConst.EngineConstants.motorEfficiency * ConvAndConst.EngineConstants.inverterEfficiency) +  ConvAndConst.EngineConstants.additionalPower) / ConvAndConst.EngineConstants.cableEfficiency
+
+    # Calculating Compressor Power during each phase of flight considered
+    CpcompCR = ConvAndConst.Cp_air * (Params.cruiseTemperature / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / Params.cruisePressure) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
+    CpcompTO = ConvAndConst.Cp_air * (ConvAndConst.T0 / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / ConvAndConst.p0) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
+    CpcompCL = ConvAndConst.Cp_air * (T_cl / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / p_cl) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
+    CpcompLOI = ConvAndConst.Cp_air * (T_loi / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / p_loi) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
+
+    compressorPowerCL = CpcompCL * Ptot_CL_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompCL) 
+    compressorPowerTO = CpcompTO * Ptot_TO_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompTO) 
+    compressorPowerCR = CpcompCR * Ptot_CR_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompCR)
+    compressorPowerApp = CpcompCL * Ptot_APP_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompCL)
+    compressorPowerLOI = CpcompLOI * Ptot_LOI_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompLOI)
+    compressorPowerTC = CpcompCR * Ptot_TC_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompCR)
+
+    # Adding compressor power to obtain total power
+    totalClimbPower = Ptot_CL_we + compressorPowerCL
+    totalTakeOffPower = Ptot_TO_we + compressorPowerTO
+    totalCruisePower = Ptot_CR_we + compressorPowerCR
+    totalApproachPower = Ptot_APP_we + compressorPowerApp
+    totalLoiterPower = Ptot_LOI_we + compressorPowerLOI
+    totalTopOfClimbPower = Ptot_TC_we + compressorPowerTC
+    
+    # Calculate fuel cell mass
+    fuelCellWeight = Fuelcells(max(totalClimbPower, totalTakeOffPower, totalCruisePower, totalApproachPower, totalLoiterPower, totalTopOfClimbPower), ConvAndConst)
+
+    # Calculate liquid cooling mass
+    LCWeight = fuelCellWeight * ConvAndConst.EngineConstants.ratioLC
+
+    # Total mass
+    WperEngine = totalFanWeight / Params.PropulsionSizingParameters.num_engines + motorWeight + inverterWeight
+    totalWeight = totalFanWeight + Params.PropulsionSizingParameters.num_engines * (motorWeight + inverterWeight) + fuelCellWeight + LCWeight
+
+    # Writing power during each phase of flight to design parameter class
+    Params.ClassIWEParameters.takeOffPower = totalTakeOffPower
+    Params.ClassIWEParameters.cruisePower = totalCruisePower
+    Params.ClassIWEParameters.approachPower = totalApproachPower
+    Params.ClassIWEParameters.loiterPower = totalLoiterPower
+    Params.ClassIWEParameters.climbPower = totalClimbPower
+    Params.ClassIWEParameters.topOfClimbPower = totalTopOfClimbPower
+
+    return totalWeight, fuelCellWeight, WperEngine, motorWeight, nacelleWeight
+
+def classIIWeightEstimation(Params, ConvAndConst):
+    """
+    Class II Weight Estimation function to calculate the weight of the blended-wing-body design.
+
+    Inputs:
+    -----
+    Params, class of design parameters
+    ConvAndConst, class containing unit conversions and constants
+
+    Outputs:
+    -----
+    none, all parameters are immediately updated into the Params class.
+    """
+
+    # Calculate Hydrogen Tank Weight
+    Params.ClassIIWEParameters.hydrogenTankWeight = HydrogenTankWeightEstimation(Params, ConvAndConst)
+
+    # Calculate Propulsion System Weight
+    Params.ClassIIWEParameters.propulsionWeight, Params.ClassIIWEParameters.fuelCellWeight, Params.ClassIIWEParameters.engineWeight, Params.ClassIIWEParameters.motorWeight, Params.ClassIIWEParameters.nacelleWeight = classIIPropulsionSystem(Params, ConvAndConst)
+    
+    # Calculate Fuselage Weight
+    Params.ClassIIWEParameters.WFUS = classIIFuselage(Params, ConvAndConst)
+
+    # Calculate Wing Weight
+    Params.ClassIIWEParameters.WWING = classIIWingSimplified(Params, ConvAndConst)  
+
+    # Calculate Weight of Vertical Tail
+    Params.ClassIIWEParameters.WVT = classIIVerticalTail(Params, ConvAndConst) 
+
+    # Calculate Landing Gear Weight
+    Params.ClassIIWEParameters.WLG = classIILandingGear(Params, ConvAndConst)
+
+    # Calculate Paint Weight
+    Params.ClassIIWEParameters.WTPNT = classIIPaint(Params, ConvAndConst)
+
+    # Calculate Systems and Equipment Weight
+    Params.ClassIIWEParameters.WSYSEQUIPMENT = classIISystemsandEquipment(Params, ConvAndConst)
+
+    # Calculate Operating Items Weight
+    Params.ClassIIWEParameters.WOPERATINGITEMS = classIIOperatingItems(Params, ConvAndConst)
+
+    # Calculate Operating Empty Weight
+    Params.ClassIWEParameters.WOE = (Params.ClassIIWEParameters.WFUS + Params.ClassIIWEParameters.WWING + Params.ClassIIWEParameters.WLG + Params.ClassIIWEParameters.WTPNT + Params.ClassIIWEParameters.WSYSEQUIPMENT + Params.ClassIIWEParameters.WOPERATINGITEMS + Params.ClassIIWEParameters.WVT + Params.ClassIIWEParameters.propulsionWeight + Params.ClassIIWEParameters.hydrogenTankWeight)
+
+    return
