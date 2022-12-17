@@ -15,8 +15,8 @@ import numpy as np
 from DesignParameters import ConversionsAndConstants, DesignParameters
 
 #Loading all the different functions
-from ClassI_WE import classIWeight
-from ClassII_BWB import classIIWeightEstimation
+from ClassIWeightEstimation import classIWeight
+from ClassIIWeightEstimation import classIIWeightEstimation
 from PropulsionIterationV3 import PropulsionIteration
 from Empennage import verticalTailDesign
 from WingAerodynamics import PlanformParameterization, OutboardWingSizing, AerodynamicAnalysis
