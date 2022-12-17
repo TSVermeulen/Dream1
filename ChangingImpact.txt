@@ -77,6 +77,7 @@ Runtime improvements:
 	Runtime: Removed effective AR calculation from main.py as it is already included in AerodynamicPerformance.py -> DragPolar().
 	Runtime: PropulsionIterationV2.py -> PropulsionIteration(): moved altitudeThrustChecker() functions here for consistency and slight runtime improvement.
 	Runtime: PropulsionIterationV2.py -> weightEstimationFan(): removed unnecessary inputs and changed outputs to Newtons for unit consistency.   	
+	Runtime: ClassII_BWB.py: Moved all class II weight estimation functions here to reduce imports and create a general class II WE function. Reduced some repetitive calculations. 
 New functionalities:
 	New: ClassII_BWB.py -> classIIPropulsionScaling(): Implemented scaling function to scale relevant propulsion items so that the FLOPS method can appropriately scale for distributed propulsion.  	
 	New: implemented v0 of new implementation of oswald factor in WingAerodynamics.py -> AerodynamicAnalysis().
