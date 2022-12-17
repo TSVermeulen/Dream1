@@ -18,7 +18,6 @@ by Douglas P. Wells and Bryce L. Horvath
 
 import numpy as np
 from TankDesign import HydrogenTankWeightEstimation
-from ambiance import Atmosphere
 
 def classIIPropulsionScaling(Params):
     """
@@ -420,15 +419,7 @@ def classIIPropulsionSystem(Params, ConvAndConst):
     motorWeight, weight of one motor [N]
     nacelleWeight, mass of one nacelle [N]
     """
-    
-    # Atmospheric properties
-    atmos = Atmosphere(ConvAndConst.EngineConstants.climbAppAlt)
-    T_cl = atmos.temperature
-    p_cl = atmos.pressure
-    atmos = Atmosphere(Params.loiterAltitude)
-    T_loi = atmos.temperature
-    p_loi = atmos.pressure
-    
+        
     # Calculate Ducted Fan Weight
     totalFanWeight, nacelleWeight = weightEstimationFan(Params, ConvAndConst)
 
@@ -449,8 +440,8 @@ def classIIPropulsionSystem(Params, ConvAndConst):
     # Calculating Compressor Power during each phase of flight considered
     CpcompCR = ConvAndConst.Cp_air * (Params.cruiseTemperature / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / Params.cruisePressure) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
     CpcompTO = ConvAndConst.Cp_air * (ConvAndConst.T0 / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / ConvAndConst.p0) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
-    CpcompCL = ConvAndConst.Cp_air * (T_cl / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / p_cl) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
-    CpcompLOI = ConvAndConst.Cp_air * (T_loi / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / p_loi) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
+    CpcompCL = ConvAndConst.Cp_air * (Params.approachTemperature / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / Params.approachPressure) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
+    CpcompLOI = ConvAndConst.Cp_air * (Params.loiterTemperature / ConvAndConst.EngineConstants.compressorEfficiency) * ((ConvAndConst.EngineConstants.pExitCompressor / Params.loiterPressure) ** ((ConvAndConst.ka - 1) / ConvAndConst.ka) - 1)
 
     compressorPowerCL = CpcompCL * Ptot_CL_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompCL) 
     compressorPowerTO = CpcompTO * Ptot_TO_we / (ConvAndConst.EngineConstants.specificEnergyLH / 9 - CpcompTO) 

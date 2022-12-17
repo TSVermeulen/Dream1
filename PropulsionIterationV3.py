@@ -74,7 +74,6 @@ def engineAero(h:float, M:float, ConvAndConst):
 
     return Ve, Te, pe, T0a, p0a, p01, T02, rho_e, choked
     
-
 def engineSizing(h, M, Neng, thrustSetting, Params, ConvAndConst, TC=False):
     """
     Function to determine the dimensions of the engines
@@ -291,7 +290,7 @@ def PropulsionIteration(Params, ConvAndConst):
         Pfan_TC, Params.ClassIWEParameters.topOfClimbPower, mass_flow, Params.PropulsionSizingParameters.Dfan, Params.PropulsionSizingParameters.Se, Params.PropulsionSizingParameters.Di, Params.PropulsionSizingParameters.De, Params.PropulsionSizingParameters.Dn, Params.PropulsionSizingParameters.Dh, Params.PropulsionSizingParameters.ln = engineSizing(Params.cruiseAltitude, Params.cruiseMach, num, Params.PropulsionSizingParameters.TsetTC, Params, ConvAndConst, TC=True)      
         
         # Climb
-        Pfan_cl, Params.ClassIWEParameters.climbPower, diff1 = altitudeThrustChecker(ConvAndConst.EngineConstants.climbAppAlt, ConvAndConst.EngineConstants.climbMach, num, Params.PropulsionSizingParameters.TsetCL, Params, ConvAndConst) 
+        Pfan_cl, Params.ClassIWEParameters.climbPower, diff1 = altitudeThrustChecker(Params.climbAppAlt, ConvAndConst.EngineConstants.climbMach, num, Params.PropulsionSizingParameters.TsetCL, Params, ConvAndConst) 
         # Take-off
         Pfan_TO, Params.ClassIWEParameters.takeOffPower, diff2 = altitudeThrustChecker(0, 0.25, num, Params.PropulsionSizingParameters.TsetTO, Params, ConvAndConst)
         # Cruise
@@ -299,7 +298,7 @@ def PropulsionIteration(Params, ConvAndConst):
         
         if max(Pfan_cl, Pfan_TO, Pfan_CR, Pfan_TC) <= ConvAndConst.EngineConstants.motorPower and diff1 >= 0 and diff2 >= 0 and diff3 >= 0:
             # Approach power for final config
-            Params.ClassIWEParameters.approachPower = altitudeThrustChecker(ConvAndConst.EngineConstants.climbAppAlt, ConvAndConst.EngineConstants.approachMach, num, Params.PropulsionSizingParameters.TsetApp, Params, ConvAndConst)[1]
+            Params.ClassIWEParameters.approachPower = altitudeThrustChecker(Params.climbAppAlt, Params.approachMach, num, Params.PropulsionSizingParameters.TsetApp, Params, ConvAndConst)[1]
             # Loiter power for final config
             Params.ClassIWEParameters.loiterPower = altitudeThrustChecker(Params.loiterAltitude, Params.loiterMach, num, Params.PropulsionSizingParameters.TsetLoiter, Params, ConvAndConst)[1]
             
