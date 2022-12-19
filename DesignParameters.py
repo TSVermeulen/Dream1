@@ -9,7 +9,6 @@ This file contains the class definitions for the initial parameters of the desig
 from ambiance import Atmosphere
 from PropulsionIterationV2 import averageDensity
 import numpy as np
-
 class DesignParameters:
     """
     Design parameters Class
@@ -26,34 +25,49 @@ class DesignParameters:
     numberFlightAttendants = 1 + np.ceil(numberPax / 40)
     payloadWeight = 154454.7375                               # [N]
     designRange = 3700 * 10 ** 3 # [m] 
-    cruiseMach = 0.8                                        # [-]    
-
+    cruiseMach = 0.8                                        # [-]  
+    loiterTime = 3600.                                      # [s]
+    # climbSpeed = 154.333332                                 # [m/s]
+    flightTime = 15660.                                     # [s]
+    averageROC = 12.7 # [m/s]
+    averageDOC = 15.225 # [m/s]
+    
     cruiseAltitude = 10972.8                                # [m]
     atmos = Atmosphere(cruiseAltitude)
-    cruiseSpeed = atmos.speed_of_sound * cruiseMach         # [m/s]
+    cruiseSpeed = atmos.speed_of_sound * cruiseMach        # [m/s]
     cruiseDensity = atmos.density      # [kg/m3]
+    cruiseTemperature = atmos.temperature
+    cruisePressure = atmos.pressure
     cruiseSpeedOfSound = atmos.speed_of_sound
     cruiseNu = atmos.kinematic_viscosity
     
     loiterAltitude = 5000                                   # [m]
     loiterSpeed = 118.3222212                               # [m/s]
+    approachSpeed = 82.12                                   # [m/s]
     atmos = Atmosphere(loiterAltitude)
     loiterDensity = atmos.density      # [kg/m3]
     loiterNu = atmos.kinematic_viscosity
     loiterMach = loiterSpeed / atmos.speed_of_sound
-    loiterTime = 3600.                                      # [s]
 
-    approachSpeed = 82.12                                   # [m/s]
-    # climbSpeed = 154.333332                                 # [m/s]
-    flightTime = 15660.                                     # [s]
+    climbAppAlt = averageDensity(cruiseAltitude)                # [m]
+    atmos = Atmosphere(climbAppAlt)
+    approachSpeedOfSound = atmos.speed_of_sound                            # [m/s]
+    approachMach = approachSpeed / approachSpeedOfSound                                    # [-]
+    approachTemperature = atmos.temperature
+    approachPressure = atmos.pressure
 
-    averageROC = 12.7 # [m/s]
-    averageDOC = 15.225 # [m/s]
+    atmos = Atmosphere(loiterAltitude)
+    loiterSpeedOfSound = atmos.speed_of_sound                         # [m/s]
+    loiterMach = loiterSpeed / loiterSpeedOfSound                            # [-]
+    loiterDensity = atmos.density                              # [kg/m3]
+    loiterTemperature = atmos.temperature
+    loiterPressure = atmos.pressure
+
     climbTime = cruiseAltitude / averageROC
     flightTime = designRange / (cruiseSpeed)
     approachTime = cruiseAltitude / averageDOC
     cruiseTime = flightTime - climbTime - approachTime
-
+    
     class ClassIWEParameters:
         """ Parameters stored relating to the Class I Weight Estimation """
         takeOffPower = 0.                                       # [W] 
@@ -247,8 +261,7 @@ class DesignParameters:
         """ Class to store the C.G. excursion related parameters """ 
         cgOEW = 0.25 # [-]
         aftCG = 0. # [-]                                                                 
-       
-    
+         
 class ConversionsAndConstants:
     """
     Unit conversions, physical constants, and general constants Class
@@ -320,16 +333,6 @@ class ConversionsAndConstants:
         fuelCellEfficiency = 0.57 # [-] pdf stationary_kpi_report_-_18052021_-_public_version_with_identifiers
         
         # #--- Weight Calculation Parameters
-        climbAppAlt = averageDensity(DesignParameters.cruiseAltitude)                # [m]
-        atmos = Atmosphere(climbAppAlt)
-        approachSpeedOfSound = atmos.speed_of_sound                            # [m/s]
-        approachMach = DesignParameters.approachSpeed / approachSpeedOfSound                                    # [-]
-
-        atmos = Atmosphere(DesignParameters.loiterAltitude)
-        loiterSpeedOfSound = atmos.speed_of_sound                         # [m/s]
-        loiterMach = DesignParameters.loiterSpeed / loiterSpeedOfSound                            # [-]
-        loiterDensity = atmos.density                              # [kg/m3]
-
         vpa = np.arcsin(DesignParameters.ClassIWEParameters.ROC /                         # [m/s]
                     (DesignParameters.cruiseSpeed))
         

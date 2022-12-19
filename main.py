@@ -15,11 +15,10 @@ import numpy as np
 from DesignParameters import ConversionsAndConstants, DesignParameters
 
 #Loading all the different functions
-from ClassI_WE import classIWeight
-from ClassII_BWB import classIIFuselage, classIIWingSimplified, classIILandingGear, classIIPaint, classIISystemsandEquipment, classIIOperatingItems, classIIVerticalTail 
-from PropulsionIterationV3 import PropulsionIteration, weightComponents
+from ClassIWeightEstimation import classIWeight
+from ClassIIWeightEstimation import classIIWeightEstimation
+from PropulsionIterationV3 import PropulsionIteration
 from Empennage import verticalTailDesign
-from TankDesign import HydrogenTankWeightEstimation
 from WingAerodynamics import PlanformParameterization, OutboardWingSizing, AerodynamicAnalysis
 from Undercarriage import UnderCarriageSizing
 from MovableSurfaces import aileronSizing
@@ -137,18 +136,7 @@ while Iterate:
     # Class II Weight Estimation 
     #---------------------------------
 
-    DesignParameters.ClassIIWEParameters.hydrogenTankWeight = HydrogenTankWeightEstimation(DesignParameters, ConversionsAndConstants)
-    DesignParameters.ClassIIWEParameters.propulsionWeight, DesignParameters.ClassIIWEParameters.fuelCellWeight, DesignParameters.ClassIIWEParameters.engineWeight, DesignParameters.ClassIIWEParameters.motorWeight, DesignParameters.ClassIIWEParameters.nacelleWeight = weightComponents(DesignParameters, ConversionsAndConstants)
-    
-    DesignParameters.ClassIIWEParameters.WFUS = classIIFuselage(DesignParameters, ConversionsAndConstants)
-    DesignParameters.ClassIIWEParameters.WWING = classIIWingSimplified(DesignParameters, ConversionsAndConstants)   
-    DesignParameters.ClassIIWEParameters.WLG = classIILandingGear(DesignParameters, ConversionsAndConstants)
-    DesignParameters.ClassIIWEParameters.WTPNT = classIIPaint(DesignParameters, ConversionsAndConstants)
-    DesignParameters.ClassIIWEParameters.WSYSEQUIPMENT = classIISystemsandEquipment(DesignParameters, ConversionsAndConstants)
-    DesignParameters.ClassIIWEParameters.WOPERATINGITEMS = classIIOperatingItems(DesignParameters, ConversionsAndConstants)
-    DesignParameters.ClassIIWEParameters.WVT = classIIVerticalTail(DesignParameters, ConversionsAndConstants)
-
-    DesignParameters.ClassIWEParameters.WOE = (DesignParameters.ClassIIWEParameters.WFUS + DesignParameters.ClassIIWEParameters.WWING + DesignParameters.ClassIIWEParameters.WLG + DesignParameters.ClassIIWEParameters.WTPNT + DesignParameters.ClassIIWEParameters.WSYSEQUIPMENT + DesignParameters.ClassIIWEParameters.WOPERATINGITEMS + DesignParameters.ClassIIWEParameters.WVT + DesignParameters.ClassIIWEParameters.propulsionWeight + DesignParameters.ClassIIWEParameters.hydrogenTankWeight)
+    classIIWeightEstimation(DesignParameters, ConversionsAndConstants)
 
     #---------------------------------
     #C.G. Excursion
