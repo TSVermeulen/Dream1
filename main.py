@@ -24,6 +24,7 @@ from Undercarriage import UnderCarriageSizing
 from MovableSurfaces import aileronSizing
 from AerodynamicPerformance import DragPolar, calculateLiftCoefficients
 from CGExcursion import CGExcursion
+from DataStorage import dataOut
 
 """ General Setup - Iteration Parameters"""
 Iterate = True # Iteration stop/go parameter
@@ -41,6 +42,7 @@ while Iterate:
         MTOW_diff = (WTO_classII - DesignParameters.ClassIWEParameters.WTO) / DesignParameters.ClassIWEParameters.WTO * 100.0
         if abs(MTOW_diff) < 0.5:
             print("Iteration Completed")
+            dataOut(DesignParameters)
             break
 
     print("----------")
